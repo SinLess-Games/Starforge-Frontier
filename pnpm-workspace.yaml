@@ -1,0 +1,13 @@
+packages:
+  - "."
+
+allowBuilds:
+  '@firebase/util': true
+  '@parcel/watcher': true
+  '@series-inc/rundot-game-sdk': set this to true or false
+  protobufjs: true
+
+onlyBuiltDependencies:
+  - sharp
+  - msgpackr-extract
+  - "@parcel/watcher"
