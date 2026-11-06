@@ -31,7 +31,7 @@ Current focus:
 - **Linting:** ESLint
 - **Formatting:** Prettier
 - **Styles:** CSS / Sass / PostCSS / Autoprefixer
-- **Storage:** idb-keyval / RxDB
+- **Storage:** idb-keyval
 - **Audio:** Howler
 - **RUN.game SDK:** `@series-inc/rundot-game-sdk`
 
@@ -65,16 +65,24 @@ Starforge Frontier includes both human factions and alien civilizations, each wi
 
 ### Requirements
 
-- Node.js 22 or newer
+- Node.js 22.13 or newer, or Node.js 24 or newer (`^22.13.0 || >=24`)
 - pnpm 11 or newer
-- Rust stable
+- Rust 1.88 or newer
 - Linux Tauri dependencies
+
+Rust 1.88 is the `plist` 1.10 minimum. That crate is the macOS target dependency of Tauri 2.11, and 1.10.x is what pulls `quick-xml` 0.42 (`RUSTSEC-2026-0194` and `RUSTSEC-2026-0195`). Tauri stays on 2.11. Tauri 2.12 is a separate toolchain jump (Rust 1.90) and is not part of this fix.
+
+`glib` 0.18.5 remains on the gtk 0.18 stack that Tauri 2.11 and wry 0.55 pin. `GHSA-wrw7-89jp-8q8g` (`VariantStrIter` unsoundness) is fixed in glib 0.20, which is not available on this line.
+
+`@series-inc/rundot-game-sdk` stays at 5.20.0. Its postinstall downloads a zip and extracts it with `adm-zip` 0.5.x, so `pnpm-workspace.yaml` sets that package's `allowBuilds` entry to `false` and the script does not run. SDK 5.35.0 drops `adm-zip`, replaces the postinstall with `install-hint.mjs`, and adds a `ws` dependency. That release still needs an API and postinstall review before it is adopted. Do not flip `allowBuilds` to `true` while 5.20.0 is installed.
+
+`zod`, `rxdb`, and `colyseus.js` are not referenced by the app and are not dependencies. `firebase` stays, because `@series-inc/rundot-game-sdk` 5.20.0 dynamically imports `firebase/app`, `firebase/auth`, and `firebase/firestore`, and the Vite build fails if that package is missing. `@grpc/grpc-js` is overridden to 1.14.7 and `protobufjs` to 7.6.6. Firestore declares `@grpc/grpc-js` as `~1.9.0`, so 1.14.7 is outside that range. If `ws` is pulled back into the tree, the override keeps it at 8.22.1 or newer. `GHSA-73jw-fp74-p77x` affects every `ws` release before 8.21.1, so 8.21.0 is not a fix.
 
 ### Install Dependencies
 
 ```bash
 pnpm install
-````
+```
 
 ### Start Web Development Server
 
