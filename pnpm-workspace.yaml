@@ -2,12 +2,30 @@ packages:
   - "."
 
 allowBuilds:
-  '@firebase/util': true
-  '@parcel/watcher': true
-  '@series-inc/rundot-game-sdk': set this to true or false
+  "@firebase/util": true
+  "@parcel/watcher": true
+  # 5.20.0 postinstall extracts a remote zip with adm-zip 0.5.x. Leave this
+  # false. SDK 5.35.0 drops adm-zip, but it changes the postinstall and the
+  # public API and adds a ws dependency, so it needs a separate review.
+  "@series-inc/rundot-game-sdk": false
   protobufjs: true
+  # pnpm 11 ignores onlyBuiltDependencies. sharp's install script is declined
+  # explicitly; @gltf-transform still installs, and its native build is not run.
+  sharp: false
+
+minimumReleaseAgeExclude:
+  - undici@7.30.2
 
 onlyBuiltDependencies:
   - sharp
   - msgpackr-extract
   - "@parcel/watcher"
+
+overrides:
+  "@grpc/grpc-js": 1.14.7
+  "nanoid@>=3 <4": 3.3.20
+  postcss: 8.5.32
+  protobufjs: 7.6.6
+  undici: 7.30.2
+  # GHSA-73jw-fp74-p77x covers every ws before 8.21.1. 8.22.1 is the current fix.
+  "ws@<8.22.1": 8.22.1
