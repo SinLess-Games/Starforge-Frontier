@@ -5,9 +5,26 @@ allowBuilds:
   '@firebase/util': true
   '@parcel/watcher': true
   '@series-inc/rundot-game-sdk': set this to true or false
+  # pnpm 11 prompts for this native build when it is listed in onlyBuiltDependencies.
+  # Leave it off; the package is not a runtime dependency of the game.
+  msgpackr-extract: false
   protobufjs: true
 
 onlyBuiltDependencies:
   - sharp
   - msgpackr-extract
   - "@parcel/watcher"
+
+# Patched floors for transitive advisories that the open security PRs do not cover.
+overrides:
+  "brace-expansion@>=2 <3": "2.1.7"
+  "brace-expansion@>=5 <6": "5.0.12"
+  browserslist: "4.29.5"
+  baseline-browser-mapping: "2.11.35"
+  "form-data@>=4 <5": "4.0.6"
+  "immutable@>=5 <6": "5.1.9"
+  source-map-js: "1.2.2"
+  sharp: "0.35.5"
+  adm-zip: "0.6.1"
+  glob: "14.0.4"
+  minimatch: "11.0.5"
