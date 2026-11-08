@@ -53,9 +53,9 @@
   "devDependencies": {
     "@babylonjs/inspector": "^9.11.0",
     "@eslint/js": "^10.0.1",
-    "@gltf-transform/cli": "^4.4.0",
-    "@gltf-transform/core": "^4.4.0",
-    "@gltf-transform/functions": "^4.4.0",
+    "@gltf-transform/cli": "^4.5.1",
+    "@gltf-transform/core": "^4.5.1",
+    "@gltf-transform/functions": "^4.5.1",
     "@tauri-apps/cli": "^2.11.2",
     "@types/howler": "^2.2.13",
     "@types/node": "^25.9.2",
